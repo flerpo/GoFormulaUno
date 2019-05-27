@@ -2,11 +2,10 @@ package main
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/mssql"
 )
 
 var db *gorm.DB
@@ -14,7 +13,9 @@ var db *gorm.DB
 func init() {
 	//open a db connection
 	var err error
-	db, err = gorm.Open("mysql", "root:iceman@tcp(172.17.0.2:3306)/FormulaUno?charset=utf8&parseTime=True&loc=Local")
+	//db, err = gorm.Open("mssql", "formula:un0Unoun0@tcp(localhost:1433)/FormulaUno?charset=utf8&parseTime=True&loc=Local")
+	db, err = gorm.Open("mssql", "sqlserver://formula:un0Unoun0@localhost:1433?database=labb")
+
 	if err != nil {
 		panic(err)
 		panic("failed to connect database")
@@ -25,9 +26,9 @@ func init() {
 
 type trackInfoModel struct {
 	gorm.Model
-	Name           string `json:"name"`
-	Lenght         int    `json:"length"`
-	OfficialRecord string `json:"official_record"`
+	Trackname string `json:"trackname"`
+	//	Lenght         int    `json:"length"`
+	//	OfficialRecord string `json:"official_record"`
 }
 
 func main() {
@@ -62,11 +63,9 @@ func start() {
 
 // createTodo add a new todo
 func createTrack(c *gin.Context) {
-	length, _ := strconv.Atoi(c.PostForm("length"))
-	a := c.PostForm("name")
-	println(a)
 
-	track := trackInfoModel{Name: c.PostForm("name"), Lenght: length, OfficialRecord: c.PostForm("official_record")}
-	db.Save(&track)
+	track := trackInfoModel{Trackname: c.PostForm("trackname")}
+	println(&track.Trackname)
+	db.Create(&track)
 	c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Track created successfully!", "resourceId": track.ID})
 }
