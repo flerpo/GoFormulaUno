@@ -13,7 +13,7 @@
             "mode": "debug",
             "host": "localhost",
             "port": 2345,
-            "program": "/home/flerpo/go/src/GoFormulaUno/main/main.go",
+            "program": "/home/flerpo/go/src/GoFormulaUno/kod/main.go",
             "env": {},
             "args": [],
             "showLog": true

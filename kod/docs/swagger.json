@@ -1,0 +1,92 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Used for GoFormululaUno.",
+        "title": "GoFormulaUno",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/tracks/": {
+            "get": {
+                "description": "get track",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get track",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.trackInfoModel"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.responseMessage"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.responseMessage": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Meaningful message"
+                },
+                "resourceId": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "main.trackInfoModel": {
+            "type": "object",
+            "properties": {
+                "country": {
+                    "type": "string",
+                    "example": "Sweden"
+                },
+                "layout_image": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "length": {
+                    "type": "integer"
+                },
+                "official_record": {
+                    "type": "string"
+                },
+                "trackname": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
