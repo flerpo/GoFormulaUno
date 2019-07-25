@@ -18,7 +18,6 @@ func init() {
 
 	if err != nil {
 		panic(err)
-		panic("failed to connect database")
 	}
 	//Migrate the schema
 	db.AutoMigrate(&trackInfoModel{})
@@ -27,7 +26,7 @@ func init() {
 type trackInfoModel struct {
 	gorm.Model
 	Trackname string `json:"trackname"`
-	//	Lenght         int    `json:"length"`
+	Lenght    int    `json:"length"`
 	//	OfficialRecord string `json:"official_record"`
 }
 
@@ -47,25 +46,25 @@ func start() {
 		// v1.DELETE("/:id", deleteTrack)
 	}
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.GET("/pong", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "ping",
-		})
-	})
+	// r.GET("/ping", func(c *gin.Context) {
+	// 	c.JSON(200, gin.H{
+	// 		"message": "pong",
+	// 	})
+	// })
+	// r.GET("/pong", func(c *gin.Context) {
+	// 	c.JSON(200, gin.H{
+	// 		"message": "ping",
+	// 	})
+	// })
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
 
 // createTodo add a new todo
 func createTrack(c *gin.Context) {
-
-	track := trackInfoModel{Trackname: c.PostForm("trackname")}
-	println(&track.Trackname)
-	db.Create(&track)
-	c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Track created successfully!", "resourceId": track.ID})
+	var json trackInfoModel
+	if c.BindJSON(&json) == nil {
+		db.Create(&json)
+		c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Track created successfully!", "resourceId": json.ID})
+	}
 }
