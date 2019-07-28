@@ -5,6 +5,11 @@ import { AppComponent } from './app.component';
 import { TracksComponent } from './tracks/tracks.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -14,7 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule, MatCheckboxModule, MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
