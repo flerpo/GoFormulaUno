@@ -1,1 +1,11 @@
-<p>tracks works!</p>
+<div *ngFor="let track of tracks">
+    <h2>{{track.trackname}}</h2>
+    <p></p>
+      <p>
+        Lenght: {{track.length}}m <br/>
+        Official Record: {{track.official_record}} <br/>
+        Country: {{track.country}}<br/>
+        <!-- <img [src]="{{track.layout_image}}" /> -->
+
+      </p>
+      </div>
