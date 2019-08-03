@@ -1,0 +1,28 @@
+<div>
+  <mat-toolbar color="primary">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span>formulaWeb</span>
+  </mat-toolbar>
+</div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'push'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar><button mat-button (click)="drawer.toggle()"><-- Menu</button> </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="tracks" (click)="drawer.toggle()">Tracks</a>
+      <a mat-list-item routerLink="players" (click)="drawer.toggle()">Players</a>
+      <a mat-list-item routerLink="statistics" (click)="drawer.toggle()">Statistics</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
