@@ -8,11 +8,13 @@ import { ApiService } from "../api.service";
 })
 export class TracksComponent implements OnInit {
   tracks;
+  image;
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
     this.apiService.getTracks().subscribe(data => {
       console.log(data);
+      
       this.tracks = data;
     });
   }

@@ -5,8 +5,8 @@
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{ track.trackname }}</mat-card-title>
         <mat-card-subtitle
-          >Country: {{ track.country }} Length:
-          {{ track.length }}</mat-card-subtitle
+          >Country: {{ track.country }},  Length:
+          {{ track.length }}m</mat-card-subtitle
         >
 
         <mat-card-subtitle
@@ -15,8 +15,8 @@
       </mat-card-header>
       <img
         mat-card-image
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        alt="Photo of a Shiba Inu"
+        src="data:image/jpg;base64,{{ track.layout_image }}"
+        alt="{{ track.trackname }}"
       />
       <mat-card-content>
         <p>
