@@ -40,7 +40,7 @@ func createPlayer(c *gin.Context) {
 	var json models.PlayerModel
 	search := new(models.PlayerModel)
 	if c.BindJSON(&json) == nil {
-		db.Where("username= ?", json.UserName).First(&search)
+		db.Where("user_name= ?", json.UserName).First(&search)
 		if search.UserName != "" {
 			c.JSON(http.StatusConflict, gin.H{"status": http.StatusConflict, "message": "Player alreade exists", "resourceId": search.ID})
 		} else {
