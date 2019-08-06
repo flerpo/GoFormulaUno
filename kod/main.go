@@ -21,6 +21,8 @@ func init() {
 	}
 	//Migrate the schema
 	db.AutoMigrate(&models.TrackInfoModel{})
+	db.AutoMigrate(&models.PlayerModel{})
+	db.AutoMigrate(&models.TimeRegistrations{})
 }
 
 // @title GoFormulaUno
