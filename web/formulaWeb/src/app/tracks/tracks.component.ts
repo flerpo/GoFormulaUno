@@ -8,7 +8,6 @@ import { ApiService } from "../api.service";
 })
 export class TracksComponent implements OnInit {
   tracks;
-  image;
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {

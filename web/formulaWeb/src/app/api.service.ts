@@ -9,4 +9,7 @@ export class ApiService {
   public getTracks() {
     return this.httpClient.get(`http://localhost:8080/api/v1/tracks/`);
   }
+  public getPlayers() {
+    return this.httpClient.get(`http://localhost:8080/api/v1/players/`);
+  }
 }

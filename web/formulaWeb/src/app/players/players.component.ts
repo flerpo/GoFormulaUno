@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from "../api.service";
 
 @Component({
   selector: 'app-players',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayersComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private apiService: ApiService) { }
+  players;
   ngOnInit() {
+    this.apiService.getPlayers().subscribe(data => {
+      console.log(data)
+      this.players = data;
+    })
   }
 
 }
