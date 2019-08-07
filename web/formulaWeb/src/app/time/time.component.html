@@ -1,0 +1,15 @@
+<div *ngFor="let track of tracks">
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ track.trackname}}
+    </mat-panel-title>
+
+  </mat-expansion-panel-header>
+<div *ngFor="let time of times " >
+  <span *ngFor="let player of players">
+  <p *ngIf="(time.trackID == track.ID && time.userID == player.ID)">{{player.username}} {{time.registered_time}}  </p>
+</span></div>
+</mat-expansion-panel>
+</div>

@@ -34,6 +34,14 @@ func Start(db2 *gorm.DB) {
 		// v1.PUT("/:id", updateTrack)
 		v1Players.DELETE("/:id", deletePlayer)
 	}
+	v1Time := r.Group("/api/v1/time")
+	{
+		v1Time.POST("/", createTime)
+		v1Time.GET("/", fetchAllTimes)
+		v1Time.GET("/:id", fetchSingleTime)
+		// v1.PUT("/:id", updateTrack)
+		v1Time.DELETE("/:id", deleteTime)
+	}
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
 func createPlayer(c *gin.Context) {
@@ -49,6 +57,21 @@ func createPlayer(c *gin.Context) {
 		}
 	}
 }
+func createTime(c *gin.Context) {
+	var json models.TimeRegistrations
+	if c.BindJSON(&json) == nil {
+		db.Create(&json)
+		c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Time created successfully!", "resourceId": json.ID})
+	}
+}
+
+func deleteTime(c *gin.Context) {
+	var single models.TimeRegistrations
+	db.Find(&single, c.Param("id"))
+	db.Delete(&single)
+	c.JSON(http.StatusOK, gin.H{"status": "deleted", "message": "Deleted track " + single.RegisteredTime})
+}
+
 func deleteTrack(c *gin.Context) {
 	var single models.TrackInfoModel
 	db.Find(&single, c.Param("id"))
@@ -63,6 +86,12 @@ func deletePlayer(c *gin.Context) {
 }
 func fetchAllTracks(c *gin.Context) {
 	var all []models.TrackInfoModel
+	db.Find(&all)
+	c.JSON(http.StatusOK, all)
+}
+
+func fetchAllTimes(c *gin.Context) {
+	var all []models.TimeRegistrations
 	db.Find(&all)
 	c.JSON(http.StatusOK, all)
 }
@@ -87,6 +116,27 @@ func fetchSingleTrack(c *gin.Context) {
 	if single.ID == 0 {
 		resp := new(models.ResponseMessage)
 		resp.Message = "Track not found"
+		resp.Status = http.StatusNotFound
+		c.JSON(http.StatusNotFound, resp)
+	} else {
+		c.JSON(http.StatusOK, single)
+	}
+}
+
+// Get single track godoc
+// @Summary Get track
+// @Description get track
+// @Produce  json
+// @Path id query string false "track search by id"
+// @Success 200 {array} main.TrackInfoModel
+// @Failure 404 {array} main.responseMessage
+// @Router /tracks/:id [get]
+func fetchSingleTime(c *gin.Context) {
+	var single models.TimeRegistrations
+	db.Find(&single, c.Param("id"))
+	if single.ID == 0 {
+		resp := new(models.ResponseMessage)
+		resp.Message = "Time not found"
 		resp.Status = http.StatusNotFound
 		c.JSON(http.StatusNotFound, resp)
 	} else {
