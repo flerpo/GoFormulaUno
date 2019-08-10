@@ -1,0 +1,27 @@
+<div *ngIf="track">
+  <form class="example-form">
+    <h2>{{ track.trackname | uppercase }} Details</h2>
+    <table>
+      <tr>
+        <mat-form-field class="example-full-width">
+          <input matInput name="track.trackname" [(ngModel)]="track.trackname" placeholder="Trackname" value="{{ track.trackname }}" type="text" />
+        </mat-form-field>
+      </tr>
+      <tr>
+        <mat-form-field class="example-full-width">
+          <input matInput name="track.country" [(ngModel)]="track.country" placeholder="Country" value="{{ track.country }}" type="text"/>
+        </mat-form-field>
+      </tr>
+      <tr>
+        <mat-form-field class="example-full-width">
+          <input matInput name="track.official_record" [(ngModel)]="track.official_record" placeholder="Official Record" value="{{ track.official_record }}" type="text" />
+        </mat-form-field>
+      </tr>
+      <tr>
+            <mat-form-field class="example-full-width">
+              <input matInput name="track.length" [(ngModel)]="track.length" placeholder="Lenght" value="{{ track.length }}" type="number" />
+            </mat-form-field>
+          </tr>
+    </table>
+  </form>
+</div>

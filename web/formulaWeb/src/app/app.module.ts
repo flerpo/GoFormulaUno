@@ -7,6 +7,7 @@ import { TracksComponent } from './tracks/tracks.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -22,6 +23,8 @@ import { PlayersComponent } from './players/players.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TimeComponent } from './time/time.component';
+import { TrackdetailComponent } from './trackdetail/trackdetail.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -31,13 +34,14 @@ import { TimeComponent } from './time/time.component';
     NavigationComponent,
     PlayersComponent,
     StatisticsComponent,
-    TimeComponent
-  ],
+    TimeComponent,
+    TrackdetailComponent,
+    ],
   imports: [
-    BrowserModule,
+    BrowserModule,FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatExpansionModule,
+    MatExpansionModule, MatInputModule,
     MatButtonModule, MatCheckboxModule, MatCardModule, LayoutModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, AppRoutingModule
   ],
   providers: [],

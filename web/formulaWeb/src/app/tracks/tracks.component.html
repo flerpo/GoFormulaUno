@@ -1,6 +1,6 @@
-<div *ngFor="let track of tracks">
-  <div style="width: 33%; float:left; padding-left: 5px; padding-top: 5px">
-    <mat-card class="example-card">
+<div  class="card-div" *ngFor="let track of tracks">
+  <div>
+    <mat-card class="track-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{ track.trackname }}</mat-card-title>
@@ -11,7 +11,17 @@
       <mat-card-actions>
         <button mat-button>Register time</button>
         <button mat-button>View times</button>
+        <button mat-button (click)="editdrawer.toggle()" (click)="onSelect(track)">Edit track</button>
       </mat-card-actions>
+      
     </mat-card>
+    
   </div>
 </div>
+  <mat-drawer #editdrawer class="example-sidenav" mode="push"> 
+      <div class="example-sidenav-content">
+          <app-trackdetail [track]="selectedTrack"></app-trackdetail>
+        </div>
+  </mat-drawer>
+
+  

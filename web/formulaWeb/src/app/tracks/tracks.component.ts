@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../api.service";
+import { Track } from "../track";
 
 @Component({
   selector: "app-tracks",
@@ -7,14 +8,16 @@ import { ApiService } from "../api.service";
   styleUrls: ["./tracks.component.css"]
 })
 export class TracksComponent implements OnInit {
-  tracks;
+  selectedTrack: Track;
+  public tracks: Track[];
   constructor(private apiService: ApiService) {}
 
+  onSelect(track: Track): void {
+    this.selectedTrack = track;
+  }
   ngOnInit() {
-    this.apiService.getTracks().subscribe(data => {
-      console.log(data);
-      
-      this.tracks = data;
+    this.apiService.getTracks().subscribe(tracks => {
+      this.tracks = tracks;
     });
   }
 }

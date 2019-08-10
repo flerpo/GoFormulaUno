@@ -15,7 +15,7 @@ export class NavigationComponent {
       map(result => result.matches),
       share()
     );
-
+  title = "Formula 1 - 2019"
   constructor(private breakpointObserver: BreakpointObserver) {}
 
 }

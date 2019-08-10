@@ -1,0 +1,27 @@
+.example-container {
+    width: 500px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 100px;
+  }
+
+  .card-div {
+    width: 33%; 
+    float:left; 
+    padding-left: 5px; 
+    padding-top: 5px;
+    height: 500px;
+  }
+
+  .track-card {
+      height: inherit;
+  }
