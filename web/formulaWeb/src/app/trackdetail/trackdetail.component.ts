@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Track } from '../track';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-trackdetail',
@@ -8,11 +9,13 @@ import { Track } from '../track';
 })
 export class TrackdetailComponent implements OnInit {
   @Input() track: Track;
-
-  constructor() { }
+  
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    console.log(this.track)
   }
 
+  onSubmit(track) {
+    this.apiService.updateTrack(track).subscribe()
+  }
 }

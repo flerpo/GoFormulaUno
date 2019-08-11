@@ -16,9 +16,14 @@ export class ApiService {
     // return this.httpClient.get(`http://localhost:8080/api/v1/tracks/`);
   }
   public getPlayers() {
+
     return this.httpClient.get(`http://localhost:8080/api/v1/players/`);
   }
   public getTimes() {
     return this.httpClient.get(`http://localhost:8080/api/v1/time/`);
+  }
+
+  public updateTrack(track) {
+    return this.httpClient.put(`http://localhost:8080/api/v1/tracks/` + JSON.stringify(track.ID), track);
   }
 }

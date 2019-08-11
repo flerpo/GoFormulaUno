@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	"github.com/gin-contrib/cors"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -16,6 +17,12 @@ var db *gorm.DB
 func Start(db2 *gorm.DB) {
 	db = db2
 	r := gin.Default()
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:4200"}
+	// config.AllowOrigins == []string{"http://google.com", "http://facebook.com"}
+
+	r.Use(cors.New(config))
+
 	url := ginSwagger.URL("doc.json") // The url pointing to API definition
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 	v1Tracks := r.Group("/api/v1/tracks")
@@ -23,7 +30,7 @@ func Start(db2 *gorm.DB) {
 		v1Tracks.POST("/", createTrack)
 		v1Tracks.GET("/", fetchAllTracks)
 		v1Tracks.GET("/:id", fetchSingleTrack)
-		// v1.PUT("/:id", updateTrack)
+		v1Tracks.PUT("/:id", updateTrack)
 		v1Tracks.DELETE("/:id", deleteTrack)
 	}
 	v1Players := r.Group("/api/v1/players")
@@ -31,7 +38,7 @@ func Start(db2 *gorm.DB) {
 		v1Players.POST("/", createPlayer)
 		v1Players.GET("/", fetchAllPlayers)
 		v1Players.GET("/:id", fetchSinglePlayer)
-		// v1.PUT("/:id", updateTrack)
+		//  v1.PUT("/:id", updateTrack)
 		v1Players.DELETE("/:id", deletePlayer)
 	}
 	v1Time := r.Group("/api/v1/time")
@@ -71,6 +78,15 @@ func deleteTime(c *gin.Context) {
 	db.Delete(&single)
 	c.JSON(http.StatusOK, gin.H{"status": "deleted", "message": "Deleted track " + single.RegisteredTime})
 }
+
+func updateTrack(c *gin.Context) {
+	var json models.TrackInfoModel
+	var single models.TrackInfoModel
+	db.Find(&single, c.Param("id"))
+	if c.BindJSON(&json) == nil {
+		db.Save(&json)
+		c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Time created successfully!", "resourceId": json.ID})
+	}}
 
 func deleteTrack(c *gin.Context) {
 	var single models.TrackInfoModel

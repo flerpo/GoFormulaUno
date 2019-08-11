@@ -1,5 +1,5 @@
 <div *ngIf="track">
-  <form class="example-form">
+  <form class="example-form" #UpdateTrack="ngForm" (ngSubmit)="onSubmit(track)">
     <h2>{{ track.trackname | uppercase }} Details</h2>
     <table>
       <tr>
@@ -23,5 +23,6 @@
             </mat-form-field>
           </tr>
     </table>
+    <button type="submit">uppdatera</button>
   </form>
 </div>
