@@ -16,7 +16,7 @@ RUN go get -d -v
 # RUN go mod download
 # RUN go mod verify
 # Build the binary.
-RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/main
+RUN GOOS=linux GOARCH=amd64 go build main.go -ldflags="-w -s" -o /go/bin/main
 ############################
 # STEP 2 build a small image
 ############################
