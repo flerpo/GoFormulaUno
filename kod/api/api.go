@@ -1,7 +1,7 @@
 package api
 
 import (
-	"GoFormulaUno/kod/models"
+	"github.com/flerpo/GoFormulaUno/kod/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
