@@ -15,7 +15,7 @@ func init() {
 	//open a db connection
 	var err error
 	//db, err = gorm.Open("mysql", "sqlserver://sa:sofarfromhome123@localhost:1433?database=labb")
-	db, err := gorm.Open("mysql", "formula:sofarfrompassword@tcp(35.241.190.209:3306)/formula?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "formula:sofarfrompassword@tcp(172.17.0.3:3306)/formula?charset=utf8&parseTime=True&loc=Local")
 	defer db.Close()
 	if err != nil {
 		panic(err)
@@ -42,5 +42,5 @@ func init() {
 // @host localhost:8080
 // @BasePath /api/v1
 func main() {
-	api.Start()
+	api.Start(db)
 }

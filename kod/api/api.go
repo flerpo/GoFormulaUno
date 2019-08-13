@@ -18,13 +18,8 @@ import (
 var db *gorm.DB
 
 //Start the api
-func Start() {
-	db, err := gorm.Open("mysql", "formula:sofarfrompassword@tcp(35.241.190.209:3306)/formula?charset=utf8&parseTime=True&loc=Local")
-	defer db.Close()
-	if err != nil {
-		panic(err)
-	}
-	println("databaskoppling")	
+func Start(db2 *gorm.DB) {
+	db = db2
 	r := gin.Default()
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"http://localhost:4200"}
