@@ -6,7 +6,7 @@ import (
 	"github.com/flerpo/GoFormulaUno/kod/models"
 
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mssql"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 var db *gorm.DB
@@ -14,11 +14,13 @@ var db *gorm.DB
 func init() {
 	//open a db connection
 	var err error
-	db, err = gorm.Open("mssql", "sqlserver://formula:un0Unoun0@localhost:1433?database=labb")
-
+	//db, err = gorm.Open("mysql", "sqlserver://sa:sofarfromhome123@localhost:1433?database=labb")
+	db, err := gorm.Open("mysql", "formula:sofarfrompassword@tcp(35.241.190.209:3306)/formula?charset=utf8&parseTime=True&loc=Local")
+	defer db.Close()
 	if err != nil {
 		panic(err)
 	}
+	println("skapar databastabeller")
 	//Migrate the schema
 	db.AutoMigrate(&models.TrackInfoModel{})
 	db.AutoMigrate(&models.PlayerModel{})

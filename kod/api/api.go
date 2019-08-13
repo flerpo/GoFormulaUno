@@ -1,11 +1,15 @@
 package api
 
 import (
-	"github.com/flerpo/GoFormulaUno/kod/models"
+	"fmt"
 	"net/http"
+	"os"
+
+	"github.com/flerpo/GoFormulaUno/kod/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+
 	"github.com/gin-contrib/cors"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -86,7 +90,8 @@ func updateTrack(c *gin.Context) {
 	if c.BindJSON(&json) == nil {
 		db.Save(&json)
 		c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Time created successfully!", "resourceId": json.ID})
-	}}
+	}
+}
 
 func deleteTrack(c *gin.Context) {
 	var single models.TrackInfoModel
@@ -102,7 +107,17 @@ func deletePlayer(c *gin.Context) {
 }
 func fetchAllTracks(c *gin.Context) {
 	var all []models.TrackInfoModel
-	db.Find(&all)
+
+	query := db.Find(&all)
+	if query.Error != nil {
+		if query.Error == gorm.ErrRecordNotFound {
+			println("hittade ingen post")
+			return
+		} else {
+			fmt.Fprintf(os.Stderr, "database query failed: %v", query.Error)
+			return
+		}
+	}
 	c.JSON(http.StatusOK, all)
 }
 
