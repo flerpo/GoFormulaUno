@@ -112,10 +112,10 @@ func fetchAllTracks(c *gin.Context) {
 	if query.Error != nil {
 		if query.Error == gorm.ErrRecordNotFound {
 			println("hittade ingen post")
-			return
+			c.JSON(http.StatusNoContent, all)
 		} else {
 			fmt.Fprintf(os.Stderr, "database query failed: %v", query.Error)
-			return
+			c.JSON(http.StatusBadRequest, all)
 		}
 	}
 	c.JSON(http.StatusOK, all)
