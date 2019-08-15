@@ -6,21 +6,22 @@ import (
 	"os"
 
 	"github.com/flerpo/GoFormulaUno/kod/db"
-
 	"github.com/flerpo/GoFormulaUno/kod/models"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-
 	"github.com/gin-contrib/cors"
+
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 var err error
+var database *gorm.DB
 
 //Start the api
 func Start() {
 	r := gin.Default()
+	database = db.GetConnection()
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"http://localhost:4200"}
 	// config.AllowOrigins == []string{"http://google.com", "http://facebook.com"}
@@ -57,13 +58,14 @@ func Start() {
 }
 func createPlayer(c *gin.Context) {
 	var json models.PlayerModel
+
 	search := new(models.PlayerModel)
 	if c.BindJSON(&json) == nil {
-		db.Db.Where("user_name= ?", json.UserName).First(&search)
+		database.Where("user_name= ?", json.UserName).First(&search)
 		if search.UserName != "" {
 			c.JSON(http.StatusConflict, gin.H{"status": http.StatusConflict, "message": "Player alreade exists", "resourceId": search.ID})
 		} else {
-			db.Db.Create(&json)
+			database.Create(&json)
 			c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Player created successfully!", "resourceId": json.ID})
 		}
 	}
@@ -71,44 +73,50 @@ func createPlayer(c *gin.Context) {
 func createTime(c *gin.Context) {
 	var json models.TimeRegistrations
 	if c.BindJSON(&json) == nil {
-		db.Db.Create(&json)
+		database.Create(&json)
 		c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Time created successfully!", "resourceId": json.ID})
+		database.Close()
 	}
 }
 
 func deleteTime(c *gin.Context) {
 	var single models.TimeRegistrations
-	db.Db.Find(&single, c.Param("id"))
-	db.Db.Delete(&single)
+	var database = db.GetConnection()
+
+	database.Find(&single, c.Param("id"))
+	database.Delete(&single)
 	c.JSON(http.StatusOK, gin.H{"status": "deleted", "message": "Deleted track " + single.RegisteredTime})
 }
 
 func updateTrack(c *gin.Context) {
 	var json models.TrackInfoModel
 	var single models.TrackInfoModel
-	db.Db.Find(&single, c.Param("id"))
+
+	database.Find(&single, c.Param("id"))
 	if c.BindJSON(&json) == nil {
-		db.Db.Save(&json)
+		database.Save(&json)
 		c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Time created successfully!", "resourceId": json.ID})
 	}
 }
 
 func deleteTrack(c *gin.Context) {
 	var single models.TrackInfoModel
-	db.Db.Find(&single, c.Param("id"))
-	db.Db.Delete(&single)
+
+	database.Find(&single, c.Param("id"))
+	database.Delete(&single)
 	c.JSON(http.StatusOK, gin.H{"status": "deleted", "message": "Deleted track " + single.Trackname})
 }
 func deletePlayer(c *gin.Context) {
 	var single models.PlayerModel
-	db.Db.Find(&single, c.Param("id"))
-	db.Db.Delete(&single)
+
+	database.Find(&single, c.Param("id"))
+	database.Delete(&single)
 	c.JSON(http.StatusOK, gin.H{"status": "deleted", "message": "Deleted player " + single.UserName})
 }
 func fetchAllTracks(c *gin.Context) {
 	var all []models.TrackInfoModel
-	
-	query := db.Db.Find(&all)
+
+	query := database.Find(&all)
 	if query.Error != nil {
 		if query.Error == gorm.ErrRecordNotFound {
 			println("hittade ingen post")
@@ -123,13 +131,15 @@ func fetchAllTracks(c *gin.Context) {
 
 func fetchAllTimes(c *gin.Context) {
 	var all []models.TimeRegistrations
-	db.Db.Find(&all)
+
+	database.Find(&all)
 	c.JSON(http.StatusOK, all)
 }
 
 func fetchAllPlayers(c *gin.Context) {
 	var all []models.PlayerModel
-	db.Db.Find(&all)
+
+	database.Find(&all)
 	c.JSON(http.StatusOK, all)
 }
 
@@ -143,7 +153,8 @@ func fetchAllPlayers(c *gin.Context) {
 // @Router /tracks/:id [get]
 func fetchSingleTrack(c *gin.Context) {
 	var single models.TrackInfoModel
-	db.Db.Find(&single, c.Param("id"))
+
+	database.Find(&single, c.Param("id"))
 	if single.ID == 0 {
 		resp := new(models.ResponseMessage)
 		resp.Message = "Track not found"
@@ -164,7 +175,8 @@ func fetchSingleTrack(c *gin.Context) {
 // @Router /tracks/:id [get]
 func fetchSingleTime(c *gin.Context) {
 	var single models.TimeRegistrations
-	db.Db.Find(&single, c.Param("id"))
+
+	database.Find(&single, c.Param("id"))
 	if single.ID == 0 {
 		resp := new(models.ResponseMessage)
 		resp.Message = "Time not found"
@@ -177,7 +189,8 @@ func fetchSingleTime(c *gin.Context) {
 
 func fetchSinglePlayer(c *gin.Context) {
 	var single models.PlayerModel
-	db.Db.Find(&single, c.Param("id"))
+
+	database.Find(&single, c.Param("id"))
 	if single.ID == 0 {
 		resp := new(models.ResponseMessage)
 		resp.Message = "Player not found"
@@ -190,13 +203,14 @@ func fetchSinglePlayer(c *gin.Context) {
 
 func createTrack(c *gin.Context) {
 	var json models.TrackInfoModel
+
 	search := new(models.TrackInfoModel)
 	if c.BindJSON(&json) == nil {
-		db.Db.Where("trackname= ?", json.Trackname).First(&search)
+		database.Where("trackname= ?", json.Trackname).First(&search)
 		if search.Trackname != "" {
 			c.JSON(http.StatusConflict, gin.H{"status": http.StatusConflict, "message": "Track alreade exists", "resourceId": search.ID})
 		} else {
-			db.Db.Create(&json)
+			database.Create(&json)
 			c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Track created successfully!", "resourceId": json.ID})
 		}
 	}

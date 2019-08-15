@@ -9,20 +9,24 @@ import (
 )
 
 //Db variable
-var Db *gorm.DB
+var db *gorm.DB
+
+func init(){
+	 var b = GetConnection()
+	 println("skapar databastabeller")
+	 //Migrate the schema
+	 b.AutoMigrate(&models.TrackInfoModel{})
+	 b.AutoMigrate(&models.PlayerModel{})
+	 b.AutoMigrate(&models.TimeRegistrations{})
+}
 
 //GetConnection a db connection
-func init() {
+func GetConnection() (*gorm.DB) {
 	var err error
 	//db, err = gorm.Open("mssql", "sqlserver://sa:!_ucKy-!uKe@localhost:1433?database=labb")
-	Db, err := gorm.Open("mysql", "root:sofarfromhome@tcp(172.17.0.2:3306)/formula?charset=utf8&parseTime=True")
+	db, err := gorm.Open("mysql", "root:sofarfromhome@tcp(172.17.0.2:3306)/formula?charset=utf8&parseTime=True")
 	if err != nil {
 		panic(err)
 	}
-
-	println("skapar databastabeller")
-	//Migrate the schema
-	Db.AutoMigrate(&models.TrackInfoModel{})
-	Db.AutoMigrate(&models.PlayerModel{})
-	Db.AutoMigrate(&models.TimeRegistrations{})
+	return db
 }
