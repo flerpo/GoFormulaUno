@@ -7,9 +7,9 @@ import (
 
 	"github.com/flerpo/GoFormulaUno/kod/db"
 	"github.com/flerpo/GoFormulaUno/kod/models"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/gin-contrib/cors"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
