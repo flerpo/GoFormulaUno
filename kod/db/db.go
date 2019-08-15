@@ -18,6 +18,7 @@ func init(){
 	 b.AutoMigrate(&models.TrackInfoModel{})
 	 b.AutoMigrate(&models.PlayerModel{})
 	 b.AutoMigrate(&models.TimeRegistrations{})
+	 b.Close()
 }
 
 //GetConnection a db connection

@@ -81,7 +81,6 @@ func createTime(c *gin.Context) {
 
 func deleteTime(c *gin.Context) {
 	var single models.TimeRegistrations
-	var database = db.GetConnection()
 
 	database.Find(&single, c.Param("id"))
 	database.Delete(&single)
