@@ -19,7 +19,6 @@ func GetConnection() {
 	if err != nil {
 		panic(err)
 	}
-	defer Db.Close()
 
 	println("skapar databastabeller")
 	//Migrate the schema
