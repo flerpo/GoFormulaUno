@@ -107,6 +107,7 @@ func deletePlayer(c *gin.Context) {
 }
 func fetchAllTracks(c *gin.Context) {
 	var all []models.TrackInfoModel
+	
 	query := db.Db.Find(&all)
 	if query.Error != nil {
 		if query.Error == gorm.ErrRecordNotFound {
