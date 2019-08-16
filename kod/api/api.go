@@ -7,6 +7,7 @@ import (
 
 	"github.com/flerpo/GoFormulaUno/kod/db"
 	"github.com/flerpo/GoFormulaUno/kod/models"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -17,6 +18,10 @@ import (
 
 var err error
 var database *gorm.DB
+
+func main() {
+	Start()
+}
 
 //Start the api
 func Start() {

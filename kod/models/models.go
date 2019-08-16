@@ -16,7 +16,7 @@ type TrackInfoModel struct {
 	Lenght         int    `json:"length"`
 	OfficialRecord string `json:"official_record"`
 	Country        string `json:"country" example:"Sweden"`
-	LayoutImage    string `gorm:"type:blob;" json:"layout_image"`
+	LayoutImage    string `gorm:"type:longtext;" json:"layout_image"`
 }
 
 //PlayerModel for userinfo and stuff
