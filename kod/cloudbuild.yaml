@@ -5,7 +5,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA']
 
+# Deploy an image from Container Registry to Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'create', '--region', 'EUROPE-WEST3']
+  args: ['beta', 'run', 'deploy', 'api', '--image', 'eu.gcr.io/[PROJECT_ID]/api:$SHORT_SHA', '--region', EUROPE-WEST3, '--platform', 'managed', '--allow-unauthenticated']
 
 images: ['eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA']
