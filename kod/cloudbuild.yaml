@@ -1,11 +1,11 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
- args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA', 'kod/Dockerfile']
+  args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA', 'kod/Dockerfile']
 
 - name: 'gcr.io/cloud-builders/docker'
- args: ['push', 'gcr.io/$PROJECT_ID/api']
+  args: ['push', 'gcr.io/$PROJECT_ID/api']
 
 - name: 'gcr.io/cloud-builders/gcloud'
- args: ['app', 'create', '--region', 'EUROPE-NORTH-1']
+  args: ['app', 'create', '--region', 'EUROPE-NORTH-1']
 
 images: ['eu.gcr.io/$PROJECT_ID/api']
