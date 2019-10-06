@@ -6,6 +6,6 @@ steps:
   args: ['push', 'eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'create', '--region', 'EUROPE-WEST-3']
+  args: ['app', 'create', '--region', 'EUROPE-WEST3']
 
 images: ['eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA']
