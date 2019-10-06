@@ -1,7 +1,7 @@
   
 steps:
 - name: 'gcr.io/cloud-builders/docker'
- args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA', '.']
+ args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA', 'kod/Dockerfile']
 
 - name: 'gcr.io/cloud-builders/docker'
  args: ['push', 'gcr.io/$PROJECT_ID/api']
