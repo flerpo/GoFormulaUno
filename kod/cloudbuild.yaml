@@ -7,3 +7,5 @@ steps:
 
 - name: 'gcr.io/cloud-builders/gcloud'
  args: ['app', 'create', '--region', 'EUROPE-NORTH-1']
+
+images: ['eu.gcr.io/$PROJECT_ID/api']
