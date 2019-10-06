@@ -1,0 +1,10 @@
+  
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+ args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/api:$SHORT_SHA', '.']
+
+- name: 'gcr.io/cloud-builders/docker'
+ args: ['push', 'gcr.io/$PROJECT_ID/api']
+
+- name: 'gcr.io/cloud-builders/gcloud'
+ args: ['app', 'create', '--region', 'EUROPE-NORTH-1']
